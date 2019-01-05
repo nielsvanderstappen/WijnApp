@@ -1,148 +1,155 @@
+package be.pxl.wijn;
+
 import java.time.LocalDate;
 
 public class Wijn {
-    private String Naam, Omschrijving, Druivenras, Kleur, Land, Regio, Serveertip;
-    private double Jaargang, Alcoholpercentage, AdviesPrijs;
+    private String naam, omschrijving, druivenras, kleur, land, regio, serveerTip;
+    private double alcoholPercentage;
+    private int jaargang;
 
-    public Wijn(String naam, String kleur, String land, double jaargang, double alcoholpercentage) {
-        Naam = naam;
-        Kleur = kleur;
-        Land = land;
-        Jaargang = 2018;
-        Alcoholpercentage = 12.5;
+    Wijn(String naam, String kleur, String land) {
+        this.jaargang = LocalDate.now().getYear() - 1;
+        this.alcoholPercentage = 12.5;
+
     }
 
+    Wijn(String naam, String land, int jaargang, double alcoholPercentage) {
+
+        }
+
+
     public String getNaam() {
-        return Naam;
+        return naam;
     }
 
     public void setNaam(String naam) {
-        Naam = naam;
+        this.naam = naam;
     }
 
     public String getOmschrijving() {
-        return Omschrijving;
+        return omschrijving;
     }
 
     public void setOmschrijving(String omschrijving) {
-        Omschrijving = omschrijving;
+        this.omschrijving = omschrijving;
     }
 
     public String getDruivenras() {
-        return Druivenras;
+        return druivenras;
     }
 
     public void setDruivenras(String druivenras) {
-        Druivenras = druivenras;
+        this.druivenras = druivenras;
     }
 
     public String getKleur() {
-        return Kleur;
+        return kleur;
     }
 
     public void setKleur(String kleur) {
-        while (kleur != "Wit" || kleur != "Rood" || kleur != "Rosé") {
-            Kleur = "Rood";
+        while (kleur != "Wit" && kleur != "Rood" && kleur != "Rosé") {
+            kleur = "Rood";
         }
-        Kleur = kleur;
+        this.kleur = kleur;
     }
 
     public String getLand() {
-        return Land;
+        return land;
     }
 
     public void setLand(String land) {
-        while (land != "Frankrijk" || land != "Chili" || land != "Italië" || land != "Spanje") {
-            System.out.println("Onbekend, Geef een geldig land op");
-            System.out.println("Dit kan Frankrijk, Chili, Italië of Spanje zijn. ");
+        while (land != "Frankrijk" && land != "Chili" && land != "Italië" && land !="Spanje") {
+            System.out.println("Onbekend, geef een geldig land op!");
+            System.out.println(" Dit kan Frankrijk, Chili, Italië of Spanje zijn. ");
         }
-        Land = land;
+        this.land = land;
     }
 
     public String getRegio() {
-        return Regio;
+        return regio;
     }
 
     public void setRegio(String regio) {
-        Regio = regio;
+        this.regio = regio;
     }
 
-    public String getServeertip() {
-        return Serveertip;
+    public String getServeerTip() {
+        return serveerTip;
     }
 
-    public void setServeertip(String serveertip) {
-        Serveertip = serveertip;
+    public void setServeerTip(String serveerTip) {
+        this.serveerTip = serveerTip;
     }
 
-    public double getJaargang() {
-        return Jaargang;
+    public double getAlcoholPercentage() {
+        return alcoholPercentage;
     }
 
-    public void setJaargang(double jaargang) {
+    public void setAlcoholPercentage(double alcoholPercentage) {
+        if (alcoholPercentage < 0) {
+            alcoholPercentage = 0;
+        } else if (alcoholPercentage > 17) {
+            alcoholPercentage = 17;
+        } else {
+            alcoholPercentage = alcoholPercentage;
+        }
+        this.alcoholPercentage = alcoholPercentage;
+    }
+
+    public int getJaargang() {
+        return jaargang;
+    }
+
+    public void setJaargang(int jaargang) {
         if (jaargang < 1950) {
-            Jaargang = 1950;
-        } else if (jaargang > 2019) {
-            Jaargang = LocalDate.now().getYear();
+            jaargang = 1950;
+        } else if (jaargang > LocalDate.now().getYear()) {
+            jaargang = LocalDate.now().getYear();
         } else {
-            Jaargang = jaargang;
+            jaargang = jaargang;
         }
+        this.jaargang = jaargang;
     }
 
-    public double getAlcoholpercentage() {
-        return Alcoholpercentage;
-    }
-
-    public void setAlcoholpercentage(double alcoholpercentage) {
-        if (alcoholpercentage < 0) {
-            Alcoholpercentage = 0;
-        } else if (alcoholpercentage > 17) {
-            Alcoholpercentage = 17;
+    public double getAdviesPrijs() {
+        double prijs;
+        if (land.equals("Frankrijk")) {
+            prijs = 7.50;
+        } else if (land.equals("chili")) {
+            prijs = 8.25;
+        } else if (land.equals("Italië")) {
+            prijs = 9.30;
+        } else if (land.equals("Spanje")) {
+            prijs = 6.45;
         } else {
-            Alcoholpercentage = alcoholpercentage;
+            prijs = 9.30;
         }
+        if (jaargang % 10 != 7) {
+            prijs += (LocalDate.now().getYear() - jaargang) * 0.1;
+        }
+
+    return prijs;
     }
 
-    public void getAdviesPrijs(String getLand, double AdviesPrijs, double OuderdomPrijs) {
-        if (getLand == "Frankrijk") {
-            AdviesPrijs = 7.5;
-
-        } else if (getLand == "Chili") {
-            AdviesPrijs = 8.25;
-
-
-        } else if (getLand == "Italië") {
-            AdviesPrijs = 9.30;
-
-        } else if (getLand == "Spanje") {
-            AdviesPrijs = 6.45;
-
-        } else {
-            AdviesPrijs = 9.3;
-        }
-
-        if (Jaargang % 10 != 7) {
-            OuderdomPrijs += getJaargang() * 0.1 + AdviesPrijs;
-        }
-    }
-    public void getLabel() {
-        System.out.println("label: " + getNaam() + getDruivenras() + getRegio() + getJaargang() );
+    public String getLabel() {
+        return naam + "\n" + druivenras + regio + jaargang;
 
     }
 
     @Override
     public String toString() {
         return "Wijn{" +
-                "Naam='" + Naam + '\'' +
-                ", Omschrijving='" + Omschrijving + '\'' +
-                ", Druivenras='" + Druivenras + '\'' +
-                ", Kleur='" + Kleur + '\'' +
-                ", Land='" + Land + '\'' +
-                ", Regio='" + Regio + '\'' +
-                ", Serveertip='" + Serveertip + '\'' +
-                ", Jaargang=" + Jaargang +
-                ", Alcoholpercentage=" + Alcoholpercentage +
-                ", AdviesPrijs=" + AdviesPrijs +
+                "naam='" + naam + '\'' +
+                ", omschrijving='" + omschrijving + '\'' +
+                ", druivenras='" + druivenras + '\'' +
+                ", kleur='" + kleur + '\'' +
+                ", land='" + land + '\'' +
+                ", regio='" + regio + '\'' +
+                ", serveerTip='" + serveerTip + '\'' +
+                ", alcoholPercentage=" + alcoholPercentage +
+                ", jaargang=" + jaargang +
                 '}';
     }
 }
+
+
