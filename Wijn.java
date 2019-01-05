@@ -13,7 +13,7 @@ public class Wijn {
 
     }
 
-    Wijn(String naam, String land, int jaargang, double alcoholPercentage) {
+    Wijn(String naam, String land, String kleur, int jaargang, double alcoholPercentage) {
 
         }
 
